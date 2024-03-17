@@ -22,7 +22,7 @@ is_debug = sys.argv[3] == "True" if len(sys.argv) > 3 else False
 log_file = output_file + ".json"
 
 
-batch_size = 10
+batch_size = 250
 num_input_smiles = 0
 input_smiles = None
 
