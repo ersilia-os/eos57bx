@@ -26,6 +26,7 @@ Mol2MolScaffold uses REINVENT4's mol2mol_scaffold.prior and mol2mol_scaffold\_ge
 ## Ersilia model URLs
 * [GitHub](https://github.com/ersilia-os/eos57bx)
 * [AWS S3](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos57bx.zip)
+* [DockerHub](https://hub.docker.com/r/ersiliaos/eos57bx) (AMD64)
 
 ## Citation
 
