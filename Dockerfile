@@ -10,4 +10,4 @@ RUN pip install tensorboard==2.11.0
 RUN pip install tensorboardx==2.1
 
 WORKDIR /repo
-COPY . /reo
+COPY . /repo
