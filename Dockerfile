@@ -8,11 +8,10 @@ RUN pip install chemprop==1.5.2
 RUN pip install tensorboard==2.11.0
 
 # Clone the repository
-RUN git clone --branch v4.3.5 --single-branch https://github.com/MolecularAI/REINVENT4
+RUN git clone --branch v4.2.6 --single-branch https://github.com/MolecularAI/REINVENT4
 
 # Install the package using pip
-RUN pip install -r ./REINVENT4/requirements-linux-64.lock
-RUN pip install --no-deps ./REINVENT4
-
+RUN pip install ./REINVENT4 --extra-index-url=https://pypi.anaconda.org/OpenEye/simple --extra-index-url=https://download.pytorch.org/whl/cu113
+   
 WORKDIR /repo
 COPY . /repo
