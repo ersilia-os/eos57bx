@@ -1,6 +1,6 @@
 # REINVENT 4 Mol2MolScaffold
 
-Mol2MolScaffold uses REINVENT4's mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
+Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
 
 This model was incorporated on 2024-03-08.
 
@@ -49,6 +49,8 @@ _10 of 500 columns are shown_
 - **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos57bx.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos57bx.zip)
 
 ### Resource Consumption
+- **Model Size (Mb):** `296`
+- **Environment Size (Mb):** `8349`
 
 
 ### References
