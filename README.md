@@ -4,6 +4,7 @@ Mol2MolScaffold uses REINVENT4's mol2mol scaffold prior and mol2mol scaffold gen
 
 This model was incorporated on 2024-03-08.
 
+
 ## Information
 ### Identifiers
 - **Ersilia Identifier:** `eos57bx`
@@ -13,7 +14,7 @@ This model was incorporated on 2024-03-08.
 - **Task:** `Sampling`
 - **Subtask:** `Generation`
 - **Biomedical Area:** `Any`
-- **Target Organism:** `Not Applicable`
+- **Target Organism:** `Any`
 - **Tags:** `Similarity`
 
 ### Input
