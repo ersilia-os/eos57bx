@@ -2,7 +2,7 @@
 
 Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
 
-This model was incorporated on 2024-03-08.Last packaged on 2026-02-05.
+This model was incorporated on 2024-03-08.Last packaged on 2026-03-20.
 
 ## Information
 ### Identifiers
@@ -44,16 +44,16 @@ _10 of 500 columns are shown_
 - **Source:** `Local`
 - **Source Type:** `External`
 - **DockerHub**: [https://hub.docker.com/r/ersiliaos/eos57bx](https://hub.docker.com/r/ersiliaos/eos57bx)
-- **Docker Architecture:** `AMD64`, `ARM64`
+- **Docker Architecture:** `AMD64`
 - **S3 Storage**: [https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos57bx.zip](https://ersilia-models-zipped.s3.eu-central-1.amazonaws.com/eos57bx.zip)
 
 ### Resource Consumption
 - **Model Size (Mb):** `296`
 - **Environment Size (Mb):** `2368`
-- **Image Size (Mb):** `2778.45`
+- **Image Size (Mb):** `2779.31`
 
 **Computational Performance (seconds):**
-- 10 inputs: `311.25`
+- 10 inputs: `316.03`
 - 100 inputs: `-1`
 - 10000 inputs: `-1`
 
