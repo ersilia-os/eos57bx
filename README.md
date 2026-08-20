@@ -1,6 +1,6 @@
 # REINVENT 4 Mol2MolScaffold
 
-Generates roughly 500 analogues that preserve the scaffold of an input molecule, using the scaffold and generic-scaffold priors shipped with REINVENT 4. Loeffler and colleagues at AstraZeneca released the framework as an open reference implementation of generative design, combining recurrent and transformer architectures with reinforcement, transfer and curriculum learning. Sampling is stochastic, so repeated runs return different sets, and generated structures carry no guarantee of synthetic accessibility.
+Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
 
 This model was incorporated on 2024-03-08.Last packaged on 2026-03-20.
 
@@ -23,7 +23,7 @@ This model was incorporated on 2024-03-08.Last packaged on 2026-03-20.
 ### Output
 - **Output Dimension:** `500`
 - **Output Consistency:** `Variable`
-- **Interpretation:** Up to 500 generated molecules sharing the scaffold of the input compound.
+- **Interpretation:** Model generates up to 500 similar molecules per input molecule.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
