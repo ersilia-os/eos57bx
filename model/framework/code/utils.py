@@ -53,10 +53,18 @@ def sort_sampled_molecules(
 
 def filter_out_duplicate_molecules(sampled: SampleBatch, is_debug: bool) -> SampleBatch:
     """Filter out duplicate molecules from the sampled molecules.
-    It also remove the output molecules if it is similar to input molecules.
+    It also removes output molecules that are structurally identical to the input.
 
     `sampled.items1` contains input smiles.
     `sampled.smilies` contains output smiles.
+
+    The `seen[item1] = item1` line only catches an output that matches the input's
+    SMILES string byte-for-byte; REINVENT4 frequently re-writes the input into an
+    equivalent but differently-formatted SMILES (see the comment in `pad_smiles`),
+    so a structurally-identical echo with a different string was passing through
+    uncaught (confirmed empirically: 2/487 outputs for one benchmark compound were
+    the input itself). `are_smiles_same` (structural, ignores stereochemistry,
+    already used elsewhere in this file) closes that gap.
     """
 
     seen = {}
@@ -80,6 +88,16 @@ def filter_out_duplicate_molecules(sampled: SampleBatch, is_debug: bool) -> Samp
                 click.echo(
                     click.style(
                         f"Removing {smile}, as it is a duplicate entry.", fg="yellow"
+                    )
+                )
+            continue
+
+        if are_smiles_same(smile, item1):
+            if is_debug:
+                click.echo(
+                    click.style(
+                        f"Removing {smile}, as it is structurally identical to the input.",
+                        fg="yellow",
                     )
                 )
             continue
