@@ -2,7 +2,7 @@
 
 Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
 
-This model was incorporated on 2024-03-08.Last packaged on 2026-09-28.
+This model was incorporated on 2024-03-08.Last packaged on 2026-09-29.
 
 ## Information
 ### Identifiers
@@ -50,10 +50,10 @@ _10 of 500 columns are shown_
 ### Resource Consumption
 - **Model Size (Mb):** `296`
 - **Environment Size (Mb):** `2367`
-- **Image Size (Mb):** `2788.91`
+- **Image Size (Mb):** `2646.79`
 
 **Computational Performance (seconds):**
-- 10 inputs: `312.91`
+- 10 inputs: `314.86`
 - 100 inputs: `-1`
 - 10000 inputs: `-1`
 
