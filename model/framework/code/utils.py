@@ -172,6 +172,38 @@ def pad_smiles(
     return output
 
 
+def finalise_row(row: "list[str]", input_smiles: str, target: int) -> "list[str]":
+    """Merge the outputs of both priors into one clean row of exactly `target` items.
+
+    The two priors are sampled independently, so the same molecule can come out of
+    both. Keeps, in order, the molecules that parse, are not the input (stereochemistry
+    ignored) and were not kept already (canonical isomeric SMILES), up to `target`;
+    the rest of the row is padded with empty strings.
+    """
+    input_mol = Chem.MolFromSmiles(input_smiles)
+    input_flat = (
+        Chem.MolToSmiles(input_mol, isomericSmiles=False) if input_mol else None
+    )
+    seen = set()
+    kept = []
+    for smi in row:
+        if not smi:
+            continue
+        mol = Chem.MolFromSmiles(smi)
+        if mol is None:
+            continue
+        if input_flat and Chem.MolToSmiles(mol, isomericSmiles=False) == input_flat:
+            continue
+        key = Chem.MolToSmiles(mol)
+        if key in seen:
+            continue
+        seen.add(key)
+        kept.append(smi)
+        if len(kept) == target:
+            break
+    return kept + [""] * (target - len(kept))
+
+
 def make_list_into_lists_of_n(lst: "list[str]", n: int) -> "list[list[str]]":
     """This function splits a list into n parts of equal size."""
 

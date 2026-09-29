@@ -8,6 +8,7 @@ import click
 from reinvent.config_parse import read_smiles_csv_file
 
 from mol2mol_scaffold_sampler import Mol2MolScaffoldSampler
+from utils import finalise_row
 
 # parse arguments
 input_file = sys.argv[1]
@@ -22,7 +23,12 @@ is_debug = sys.argv[3] == "True" if len(sys.argv) > 3 else False
 log_file = output_file + ".json"
 
 
-batch_size = 250
+# molecules kept per input, after removing duplicates across both priors and the input itself
+N_OUTPUTS = 100
+# molecules requested from each prior. The priors overlap and the input is dropped, so asking
+# each for N_OUTPUTS keeps the merged row full (10 ChEMBL compounds: 60 filled 5/10 rows,
+# 80 filled 9/10, 100 filled 10/10)
+batch_size = 100
 num_input_smiles = 0
 input_smiles = None
 
@@ -68,20 +74,22 @@ log = {
     "end": log_scaffold_generic["end"],
     "input_smiles": log_scaffold["input_smiles"],
     "total": log_scaffold["total"] + log_scaffold_generic["total"],
-    "expected": batch_size * num_input_smiles * 2,
+    "expected": N_OUTPUTS * num_input_smiles,
 }
 
 assert len(outputs) == len(scaffold_generic_output)
 
-for idx, output in enumerate(outputs):
-    output.extend(scaffold_generic_output[idx])
+outputs = [
+    finalise_row(output + scaffold_generic_output[idx], input_smiles[idx], N_OUTPUTS)
+    for idx, output in enumerate(outputs)
+]
 
 input_len = len(input_smiles)
 output_len = len(outputs)
 assert input_len == output_len
 
 
-HEADER = ["smi_{0}".format(str(x).zfill(3)) for x in range(batch_size * 2)]
+HEADER = ["smi_{0}".format(str(x).zfill(2)) for x in range(N_OUTPUTS)]
 
 with open(output_file, "w", newline="") as fp:
     csv_writer = csv.writer(fp)

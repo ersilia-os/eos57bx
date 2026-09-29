@@ -3,7 +3,7 @@
     "Slug": "reinvent4-mol2mol-scaffold",
     "Status": "Ready",
     "Title": "REINVENT 4 Mol2MolScaffold",
-    "Description": "Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.",
+    "Description": "Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 100 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.",
     "Deployment": [
         "Local"
     ],
@@ -18,9 +18,9 @@
     "Output": [
         "Compound"
     ],
-    "Output Dimension": 500,
+    "Output Dimension": 100,
     "Output Consistency": "Fixed",
-    "Interpretation": "Model generates up to 500 similar molecules per input molecule.",
+    "Interpretation": "Model generates up to 100 similar molecules per input molecule.",
     "Tag": [
         "Similarity"
     ],
