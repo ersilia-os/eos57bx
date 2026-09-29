@@ -1,6 +1,6 @@
 # REINVENT 4 Mol2MolScaffold
 
-Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 500 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
+Mol2MolScaffold uses REINVENT4s mol2mol scaffold prior and mol2mol scaffold generic prior to generate around 100 new molecules similar to the provided molecules. The generated molecules will be relatively similar to the input molecules.
 
 This model was incorporated on 2024-03-08.Last packaged on 2026-09-29.
 
@@ -21,25 +21,25 @@ This model was incorporated on 2024-03-08.Last packaged on 2026-09-29.
 - **Input Dimension:** `1`
 
 ### Output
-- **Output Dimension:** `500`
+- **Output Dimension:** `100`
 - **Output Consistency:** `Fixed`
-- **Interpretation:** Model generates up to 500 similar molecules per input molecule.
+- **Interpretation:** Model generates up to 100 similar molecules per input molecule.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
 |------|------|-----------|-------------|
-| smi_000 | string |  | Generated molecule index 0. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_001 | string |  | Generated molecule index 1. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_002 | string |  | Generated molecule index 2. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_003 | string |  | Generated molecule index 3. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_004 | string |  | Generated molecule index 4. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_005 | string |  | Generated molecule index 5. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_006 | string |  | Generated molecule index 6. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_007 | string |  | Generated molecule index 7. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_008 | string |  | Generated molecule index 8. The mol2mol or the scaffold priors from REINVENT were used |
-| smi_009 | string |  | Generated molecule index 9. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_00 | string |  | Generated molecule index 0. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_01 | string |  | Generated molecule index 1. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_02 | string |  | Generated molecule index 2. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_03 | string |  | Generated molecule index 3. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_04 | string |  | Generated molecule index 4. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_05 | string |  | Generated molecule index 5. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_06 | string |  | Generated molecule index 6. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_07 | string |  | Generated molecule index 7. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_08 | string |  | Generated molecule index 8. The mol2mol or the scaffold priors from REINVENT were used |
+| smi_09 | string |  | Generated molecule index 9. The mol2mol or the scaffold priors from REINVENT were used |
 
-_10 of 500 columns are shown_
+_10 of 100 columns are shown_
 ### Source and Deployment
 - **Source:** `Local`
 - **Source Type:** `External`
