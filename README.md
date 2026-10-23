@@ -1,6 +1,6 @@
 # REINVENT 4 Mol2MolScaffold
 
-Explores analogues that keep the scaffold of a query molecule, merging the output of two REINVENT 4 Mol2Mol priors, one trained on ChEMBL pairs sharing an identical Murcko scaffold and the other on pairs sharing the generic, unlabelled scaffold. Duplicates and the query itself are discarded, leaving up to 100 distinct structures per input. Loeffler and co-workers at AstraZeneca built these transformer priors inside an openly licensed design framework. Decoding is by beam search, so the same input always returns the same set.
+Generates analogues of a query molecule with two REINVENT 4 Mol2Mol priors, trained on ChEMBL pairs that share an identical Murcko scaffold or the generic, unlabelled scaffold. Loeffler and co-workers at AstraZeneca built these transformer priors in an openly licensed design framework. Each prior is sampled at random, the scaffold one first, so repeated runs return different sets; sampling is repeated up to a limit until 100 distinct structures are collected. The query and its stereoisomers are discarded. The scaffold is favoured, not guaranteed.
 
 This model was incorporated on 2024-03-08.Last packaged on 2026-09-29.
 
@@ -22,8 +22,8 @@ This model was incorporated on 2024-03-08.Last packaged on 2026-09-29.
 
 ### Output
 - **Output Dimension:** `100`
-- **Output Consistency:** `Fixed`
-- **Interpretation:** Up to 100 distinct analogues of the input molecule, each built on its exact or generic Murcko scaffold.
+- **Output Consistency:** `Variable`
+- **Interpretation:** Up to 100 distinct analogues of the input molecule, sampled from priors trained on pairs that share its exact or generic Murcko scaffold; sets differ between runs.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
