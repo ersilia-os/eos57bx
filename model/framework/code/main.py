@@ -7,8 +7,7 @@ import json
 import click
 from reinvent.config_parse import read_smiles_csv_file
 
-from mol2mol_scaffold_sampler import Mol2MolScaffoldSampler
-from utils import finalise_row
+from mol2mol_scaffold_sampler import Mol2MolScaffoldSampler, N_OUTPUTS
 
 # parse arguments
 input_file = sys.argv[1]
@@ -23,19 +22,10 @@ is_debug = sys.argv[3] == "True" if len(sys.argv) > 3 else False
 log_file = output_file + ".json"
 
 
-# molecules kept per input, after removing duplicates across both priors and the input itself
-N_OUTPUTS = 100
-# molecules requested from each prior. The priors overlap and the input is dropped, so asking
-# each for N_OUTPUTS keeps the merged row full (10 ChEMBL compounds: 60 filled 5/10 rows,
-# 80 filled 9/10, 100 filled 10/10)
-batch_size = 100
-num_input_smiles = 0
 input_smiles = None
-
 
 if os.path.exists(input_file):
     input_smiles = read_smiles_csv_file(input_file, columns=0, header=True)
-    num_input_smiles = len(input_smiles)
 
 else:
     click.echo(click.style(f"[INPUT_FILE]: {input_file} doesn't exist.", fg="red"))
@@ -48,41 +38,11 @@ if not os.path.exists(os.path.dirname(os.path.abspath(output_file))):
         )
     )
 
-mol2mol_similarity = Mol2MolScaffoldSampler(batch_size=batch_size)
+mol2mol_scaffold = Mol2MolScaffoldSampler()
 
-if is_debug:
-    click.echo(click.style("Running scaffold prior", fg="white", bg="green"))
-
-outputs, _, log_scaffold = mol2mol_similarity.generate(
-    input_smiles=input_smiles,
-    sampler=mol2mol_similarity.scaffold_sampler,
-    is_debug=is_debug,
+outputs, _, log = mol2mol_scaffold.generate(
+    input_smiles=input_smiles, is_debug=is_debug
 )
-
-if is_debug:
-    click.echo(click.style("Running scaffold generic prior", fg="white", bg="green"))
-
-scaffold_generic_output, _, log_scaffold_generic = mol2mol_similarity.generate(
-    input_smiles=input_smiles,
-    sampler=mol2mol_similarity.scaffold_generic_sampler,
-    is_debug=is_debug,
-)
-
-
-log = {
-    "start": log_scaffold["start"],
-    "end": log_scaffold_generic["end"],
-    "input_smiles": log_scaffold["input_smiles"],
-    "total": log_scaffold["total"] + log_scaffold_generic["total"],
-    "expected": N_OUTPUTS * num_input_smiles,
-}
-
-assert len(outputs) == len(scaffold_generic_output)
-
-outputs = [
-    finalise_row(output + scaffold_generic_output[idx], input_smiles[idx], N_OUTPUTS)
-    for idx, output in enumerate(outputs)
-]
 
 input_len = len(input_smiles)
 output_len = len(outputs)
