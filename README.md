@@ -2,7 +2,7 @@
 
 Generates analogues of a query molecule with two REINVENT 4 Mol2Mol priors, trained on ChEMBL pairs that share an identical Murcko scaffold or the generic, unlabelled scaffold. Loeffler and co-workers at AstraZeneca built these transformer priors in an openly licensed design framework. Each prior is sampled at random, the scaffold one first, so repeated runs return different sets; sampling is repeated up to a limit until 100 distinct structures are collected. The query and its stereoisomers are discarded. The scaffold is favoured, not guaranteed.
 
-This model was incorporated on 2024-03-08.Last packaged on 2026-09-29.
+This model was incorporated on 2024-03-08.Last packaged on 2026-10-24.
 
 ## Information
 ### Identifiers
@@ -50,10 +50,10 @@ _10 of 100 columns are shown_
 ### Resource Consumption
 - **Model Size (Mb):** `296`
 - **Environment Size (Mb):** `2367`
-- **Image Size (Mb):** `2646.51`
+- **Image Size (Mb):** `2653.52`
 
 **Computational Performance (seconds):**
-- 10 inputs: `123.9`
+- 10 inputs: `260.74`
 - 100 inputs: `-1`
 - 10000 inputs: `-1`
 
