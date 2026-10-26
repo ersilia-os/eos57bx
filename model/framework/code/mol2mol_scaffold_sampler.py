@@ -1,9 +1,11 @@
 import os
+import random
 import sys
 import time
 
 import torch
-from rdkit import Chem
+from rdkit import Chem, DataStructs
+from rdkit.Chem import rdFingerprintGenerator
 from reinvent.runmodes import samplers, create_adapter
 from reinvent.runmodes.dtos import ChemistryHelpers
 from reinvent.chemistry import TransformationTokens, Conversions
@@ -16,6 +18,20 @@ N_OUTPUTS = 100  # columns of run_columns.csv
 DRAWS_PER_ROUND = 150  # sequences drawn by one call of a sampler
 MAX_ROUNDS = 5  # per prior: give up on an input after this many rounds
 TEMPERATURE = 1.0  # REINVENT 4's default for sampling
+FP_GENERATOR = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=2048)
+
+
+def rank_by_similarity(query: str, smiles: "list[str]") -> "list[str]":
+    """`smiles` from the most to the least similar to `query`.
+
+    Similarity is the Tanimoto index of Morgan fingerprints (radius 2, 2048 bits); equal
+    scores keep their order.
+    """
+    query_fp = FP_GENERATOR.GetFingerprint(Chem.MolFromSmiles(query))
+    fps = [FP_GENERATOR.GetFingerprint(Chem.MolFromSmiles(smile)) for smile in smiles]
+    scores = DataStructs.BulkTanimotoSimilarity(query_fp, fps)
+    order = sorted(range(len(smiles)), key=scores.__getitem__, reverse=True)
+    return [smiles[i] for i in order]
 
 
 class Mol2MolScaffoldSampler:
@@ -25,8 +41,10 @@ class Mol2MolScaffoldSampler:
     the generic scaffold. Each round draws DRAWS_PER_ROUND sequences by multinomial sampling (unseeded,
     so every call gives a different set). Rounds of the scaffold prior are repeated until N_OUTPUTS
     distinct molecules that are not the input (stereochemistry ignored) are collected, or MAX_ROUNDS is
-    reached; only then are rounds of the generic-scaffold prior used, to fill what is left. The row is
-    padded with empty cells. Nothing is ranked: the molecules stay in draw order.
+    reached; only then are rounds of the generic-scaffold prior used, to fill what is left. If more
+    than N_OUTPUTS were collected, N_OUTPUTS are picked at random, the scaffold prior's molecules
+    first. The row is sorted from the most to the least similar to the input (Tanimoto) and padded
+    with empty cells.
     """
 
     ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -81,12 +99,17 @@ class Mol2MolScaffoldSampler:
                 pool.setdefault(Chem.MolToSmiles(mol), None)
 
     def sample_one(self, smiles: str) -> "list[str]":
-        """Up to N_OUTPUTS distinct analogues of `smiles`, in draw order."""
+        """Up to N_OUTPUTS distinct analogues of `smiles`, the most similar first."""
         pool = {}
         self._collect(self.scaffold_sampler, smiles, pool)
-        if len(pool) < N_OUTPUTS:
+        n_scaffold = len(pool)
+        if n_scaffold < N_OUTPUTS:
             self._collect(self.scaffold_generic_sampler, smiles, pool)
-        return list(pool)[:N_OUTPUTS]
+        found = list(pool)  # scaffold prior first, then generic prior
+        picked = random.sample(found[:n_scaffold], min(N_OUTPUTS, n_scaffold))
+        generic = found[n_scaffold:]
+        picked += random.sample(generic, min(N_OUTPUTS - len(picked), len(generic)))
+        return rank_by_similarity(smiles, picked)
 
     def generate(
         self, input_smiles: "list[str]", is_debug: bool
