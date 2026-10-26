@@ -23,7 +23,7 @@ This model was incorporated on 2024-03-08.Last packaged on 2026-10-24.
 ### Output
 - **Output Dimension:** `100`
 - **Output Consistency:** `Variable`
-- **Interpretation:** Up to 100 distinct analogues of the input molecule, sampled from priors trained on pairs that share its exact or generic Murcko scaffold; sets differ between runs.
+- **Interpretation:** Up to 100 distinct analogues of the input molecule, sampled from priors trained on pairs that share its exact or generic Murcko scaffold and listed from most to least similar (Morgan Tanimoto); sets differ between runs.
 
 Below are the **Output Columns** of the model:
 | Name | Type | Direction | Description |
