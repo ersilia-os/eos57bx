@@ -47,7 +47,7 @@
     ],
     "Apptainer": "https://models-sif.s3.eu-north-1.amazonaws.com/eos57bx_v2.sif",
     "Model Size": 296.0,
-    "Environment Size": 2368.0,
+    "Environment Size": 2446.0,
     "Image Size": 2654.0,
     "Computational Performance 1": 88.08,
     "Computational Performance 2": 1487.5,
